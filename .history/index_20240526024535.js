@@ -1,5 +1,9 @@
 const express = require('express');
 const app = express();
+const puppeteer = require('puppeteer');
+const fs = require('fs');
+
+app.use(express.static('public'));
 
 // Define your routes and middleware here
 
