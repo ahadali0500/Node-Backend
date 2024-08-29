@@ -1,0 +1,26 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main  # Adjust if your branch is different
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Deploy to VPS
+      uses: appleboy/ssh-action@v0.1.2
+      with:
+        host: ${{ secrets.VPS_HOST }}
+        username: ${{ secrets.VPS_USER }}
+        key: ${{ secrets.VPS_PRIVATE_KEY }}
+        script: |
+          cd /var/www/testnodeapp
+          git pull origin main  # Replace 'main' if your branch is different
+          npm install
+          pm2 restart testnodeapp
